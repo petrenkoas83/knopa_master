@@ -69,9 +69,11 @@ Vagrant.configure("2") do |config|
 #      sudo apt-get install -y ansible python-winrm tree
       sudo apt-get install -y ansible python-pip tree
       pip install pywinrm
+	  sudo cp /etc/ansible/ansible.cfg /etc/ansible/ansible.cfg.orig
+	  sudo sed -i 's/.*forks\s*=\s*\d*.*/forks = 15/' /etc/ansible/ansible.cfg
 	  sudo cp /usr/local/lib/python2.7/dist-packages/winrm/protocol.py /usr/local/lib/python2.7/dist-packages/winrm/protocol.py.orig
-	  sudo sed -i 's/DEFAULT_READ_TIMEOUT_SEC = 30/DEFAULT_READ_TIMEOUT_SEC = 120/' /usr/local/lib/python2.7/dist-packages/winrm/protocol.py
-      sudo sed -i 's/DEFAULT_OPERATION_TIMEOUT_SEC = 20/DEFAULT_OPERATION_TIMEOUT_SEC = 90/' /usr/local/lib/python2.7/dist-packages/winrm/protocol.py
+	  sudo sed -i 's/DEFAULT_READ_TIMEOUT_SEC = 30/DEFAULT_READ_TIMEOUT_SEC = 360/' /usr/local/lib/python2.7/dist-packages/winrm/protocol.py
+      sudo sed -i 's/DEFAULT_OPERATION_TIMEOUT_SEC = 20/DEFAULT_OPERATION_TIMEOUT_SEC = 300/' /usr/local/lib/python2.7/dist-packages/winrm/protocol.py
       git clone https://github.com/Akhiles7/prepare_courses.git || echo 'already exist!'
       chown -R ubuntu:ubuntu prepare_courses
   SHELL
